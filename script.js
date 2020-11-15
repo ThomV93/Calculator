@@ -1,3 +1,8 @@
+let firstNumber = parseInt(prompt("Choose a number to calculate:"));
+let operator = prompt("Choose the operator (+, -, *, /) to calculate:");
+let secondNumber = parseInt(prompt("Choose a number to calculate:"));
+let result = 0;
+
 function add(a, b) {
     return a + b;
 };
@@ -17,16 +22,19 @@ function divide(a, b) {
 function operate(operator) {
     switch (operator) {
         case "+":
-            add(a, b);
+            result = add(firstNumber, secondNumber);
             break;
         case "-":
-            subtract(a, b);
+            result = subtract(firstNumber, secondNumber);
             break;
         case "*":
-            multiply(a, b);
+            result = multiply(firstNumber, secondNumber);
             break;
         case "/":
-            divide(a, b);
+            result = divide(firstNumber, secondNumber);
             break;
     };
+    return result;
 };
+
+console.log(operate(operator));
