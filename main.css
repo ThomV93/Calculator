@@ -1,0 +1,20 @@
+#container {
+    display: grid;
+    grid-template-columns: repeat(12, 25px);
+    grid-template-rows: repeat(7, 50px);
+}
+
+#display {
+    grid-column: 1 / 10;
+    grid-row: 1 / 2;
+}
+
+.operator {
+    grid-column: 10 / 12;
+    grid-row: 1/ -1;
+}
+
+.btn {
+    grid-column: 1 / 10;
+    grid-row: 2 / -1;
+}

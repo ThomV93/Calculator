@@ -1,7 +1,7 @@
-let firstNumber = parseInt(prompt("Choose a number to calculate:"));
+/*let firstNumber = parseInt(prompt("Choose a number to calculate:"));
 let operator = prompt("Choose the operator (+, -, *, /) to calculate:");
 let secondNumber = parseInt(prompt("Choose a number to calculate:"));
-let result = 0;
+let result = 0;*/
 
 function add(a, b) {
     return a + b;
