@@ -1,11 +1,26 @@
+body, html {
+    display: grid;
+    height: 100%;
+    background-color: #f6f6f6;
+    background-image: linear-gradient(315deg, #f6f6f6 0%, #e9e9e9 74%);
+}
+
 /* Grid start */
 #container {
     display: grid;
-    grid-template-columns: repeat(13, 25px);
+    margin: auto;
+    grid-template-columns: repeat(12, 25px);
     grid-template-rows: repeat(7, 45px);
+    border: 2.5px solid black;
+    border-radius: 5px;
+    box-shadow: 5px 10px 18px #888888;
 }
 
 #display {
+    background-color: #fff;
+    text-align: right;
+    padding: 5px 10px 0 0;
+    font-size: 2rem;
     grid-column: 1 / 10;
     grid-row: 1 / 3;
 }
@@ -33,6 +48,7 @@
 #divide {
     grid-column: 10 / 13;
     grid-row: 3;
+    font-size: 1.8rem;
 }
 
 #num7 {
@@ -53,6 +69,7 @@
 #multiply {
     grid-column: 10 / 13;
     grid-row: 4;
+    font-size: 1.8rem;
 }
 
 #num4 {
@@ -73,6 +90,7 @@
 #subtract {
     grid-column: 10 / 13;
     grid-row: 5;
+    font-size: 1.8rem;
 }
 
 #num1 {
@@ -93,6 +111,7 @@
 #add {
     grid-column: 10 / 13;
     grid-row: 6;
+    font-size: 1.8rem;
 }
 
 #num0 {
@@ -108,6 +127,7 @@
 #equal {
     grid-column: 10 / 13;
     grid-row: 7;
+    font-size: 1.8rem;
 }
 
 /* Grid end */
@@ -116,7 +136,7 @@
 button {
     border: none;
     text-decoration: none;
-    background: #0069ed;
+    background-color: #565d46;
     color: #ffffff;
     font-family: sans-serif;
     font-size: 1.5rem;
@@ -126,13 +146,16 @@ button {
     -moz-appearance: none;
 }
 
-button:hover,
-button:focus {
-    background: #0053ba;
+button:hover { 
+    background: #333333;
 }
 
 button:focus {
     outline: 1px solid #fff;
     outline-offset: -4px;
+}
+
+.operator {
+    background-color: #e06900;
 }
 /* Button styles end */
