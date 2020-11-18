@@ -11,11 +11,9 @@ const pastDisplay = document.getElementById("past-display");
 let firstNumber = "";
 let operator = "";
 let secondNumber = "";
+let result 
 
 
-
-//store the numbers and the operator in the variables
-//only run the operate function when the = sign is pressed
 //push the old values into an array to display them correctly
 function numBtns() {
     Array.from(allNum_btn).map(btn => btn.addEventListener("click", e => {
@@ -82,13 +80,13 @@ function operate(op) {
         case "+":
             result = add(parseInt(firstNumber), parseInt(secondNumber));
             break;
-        case "-":
+        case "—":
             result = subtract(parseInt(firstNumber), parseInt(secondNumber));
             break;
-        case "*":
+        case "x":
             result = multiply(parseInt(firstNumber), parseInt(secondNumber));
             break;
-        case "/":
+        case "÷":
             result = divide(parseInt(firstNumber), parseInt(secondNumber));
             break;
         case "^":
