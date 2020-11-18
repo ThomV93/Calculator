@@ -177,7 +177,11 @@ button:focus {
     outline-offset: -4px;
 }
 
-.operator {
+.operator, #equal {
     background-color: #e06900;
+}
+
+.playing {
+    transform: scale(1.1);
 }
 /* Button styles end */
