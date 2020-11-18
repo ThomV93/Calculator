@@ -1,7 +1,12 @@
-/*let firstNumber = parseInt(prompt("Choose a number to calculate:"));
-let operator = prompt("Choose the operator (+, -, *, /) to calculate:");
-let secondNumber = parseInt(prompt("Choose a number to calculate:"));
-let result = 0;*/
+//create and cash all variables used
+const clear_btn = document.getElementById("clear");
+const exponent_btn = document.getElementById("exponent");
+const factorial_btn = document.getElementById("factorial");
+const allOperator_btn = document.getElementsByClassName("operator");
+const allNum_btn = document.getElementsByClassName("btn-num");
+let result
+
+
 
 function add(a, b) {
     return a + b;
