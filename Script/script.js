@@ -51,7 +51,8 @@ function factorialBtn() {
     factorialButton.addEventListener("click", () => {
         operator = "!";
         pastDisplay.innerHTML = `${firstNumber.join("")} ${operator}`;
-        currentDisplay.innerHTML = "0";
+        operate("!");
+        currentDisplay.innerHTML = result;
     });
 };
 
@@ -165,5 +166,3 @@ clearBtn();
 
 //push the old values into an array to display them correctly
 //make sequence of calculations work
-//add playing style to clicked btns
-//make factorial work properly

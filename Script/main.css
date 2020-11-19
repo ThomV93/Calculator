@@ -180,8 +180,4 @@ button:focus {
 .operator, #equal, #backspace {
     background-color: #e06900;
 }
-
-.playing {
-    transform: scale(1.1);
-}
 /* Button styles end */
