@@ -13,8 +13,7 @@ let operator = "";
 let secondNumber = "";
 let result 
 
-
-//push the old values into an array to display them correctly
+//add click event to the numbered buttons and update the display as necessary
 function numBtns() {
     Array.from(allNum_btn).map(btn => btn.addEventListener("click", e => {
         if (operator.length === 0) {
@@ -26,9 +25,7 @@ function numBtns() {
         };
     }));
 };
-
-numBtns();
-
+//add click event to the operator buttons and update the display as necessary
 function operatorBtns() {
     Array.from(allOperator_btn).map(btn => btn.addEventListener("click", e =>{
         operator += e.target.innerText;
@@ -36,9 +33,7 @@ function operatorBtns() {
         currentDisplay.innerHTML = "0";
     }));
 };
-
-operatorBtns();
-
+//add click event to the equal button and run the calculations
 function equalBtn() {
     equalButton.addEventListener("click", () => {
         operate(operator);
@@ -46,8 +41,16 @@ function equalBtn() {
         currentDisplay.innerHTML = result;
     });
 };
-
-equalBtn();
+//add click event to the clear button and clear all the variables and display
+function clearBtn() {
+    clearButton.addEventListener("click", () => {
+        firstNumber = "";
+        operator = "";
+        secondNumber = "";
+        pastDisplay.innerHTML = "";
+        currentDisplay.innerHTML = 0;
+    });
+};
 
 //basic calculator functions
 function add(a, b) {
@@ -75,26 +78,39 @@ function factorial(n) {
 	return n *= factorial(n-1);
 };
 
+
+//run the calculations depending on user input
 function operate(op) {
     switch (op) {
         case "+":
-            result = add(parseInt(firstNumber), parseInt(secondNumber));
+            result = add(parseFloat(firstNumber), parseFloat(secondNumber));
             break;
         case "—":
-            result = subtract(parseInt(firstNumber), parseInt(secondNumber));
+            result = subtract(parseFloat(firstNumber), parseFloat(secondNumber));
             break;
         case "x":
-            result = multiply(parseInt(firstNumber), parseInt(secondNumber));
+            result = multiply(parseFloat(firstNumber), parseFloat(secondNumber));
             break;
         case "÷":
-            result = divide(parseInt(firstNumber), parseInt(secondNumber));
+            result = divide(parseFloat(firstNumber), parseFloat(secondNumber));
             break;
         case "^":
-            result = exponent(parseInt(firstNumber), parseInt(secondNumber));
+            result = exponent(parseFloat(firstNumber), parseFloat(secondNumber));
             break;
         case "!":
-            result = factorial(parseInt(firstNumber), parseInt(secondNumber));
+            result = factorial(parseFloat(firstNumber), parseFloat(secondNumber));
             break;
     };
     return result;
 };
+
+numBtns();
+
+operatorBtns();
+
+equalBtn();
+
+clearBtn();
+
+//need to recognize the comma
+//push the old values into an array to display them correctly
