@@ -177,7 +177,7 @@ button:focus {
     outline-offset: -4px;
 }
 
-.operator, #equal {
+.operator, #equal, #backspace {
     background-color: #e06900;
 }
 
