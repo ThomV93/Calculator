@@ -3,7 +3,7 @@ const clearButton = document.getElementById("clear");
 const exponentButton = document.getElementById("exponent");
 const factorialButton = document.getElementById("factorial");
 const equalButton = document.getElementById("equal");
-const allFirstLine_btn = document.getElementsByClassName("btn");
+const extraOperator_btn = document.getElementsByClassName("extra-operator");
 const allOperator_btn = document.getElementsByClassName("operator");
 const allNum_btn = document.getElementsByClassName("btn-num");
 const currentDisplay = document.getElementById("current-display");
@@ -12,6 +12,7 @@ let firstNumber = "";
 let operator = "";
 let secondNumber = "";
 let result 
+
 
 //add click event to the numbered buttons and update the display as necessary
 function numBtns() {
@@ -25,6 +26,7 @@ function numBtns() {
         };
     }));
 };
+
 //add click event to the operator buttons and update the display as necessary
 function operatorBtns() {
     Array.from(allOperator_btn).map(btn => btn.addEventListener("click", e =>{
@@ -33,6 +35,25 @@ function operatorBtns() {
         currentDisplay.innerHTML = "0";
     }));
 };
+
+//add click event to the exponent button and update the display as necessary
+function exponentBtn() {
+    exponentButton.addEventListener("click", () => {
+        operator = "^";
+        pastDisplay.innerHTML = `${firstNumber} ${operator}`;
+        currentDisplay.innerHTML = "0";
+    });
+};
+
+//add click event to the factorial button and update the display as necessary
+function factorialBtn() {
+    factorialButton.addEventListener("click", () => {
+        operator = "!";
+        pastDisplay.innerHTML = `${firstNumber} ${operator}`;
+        currentDisplay.innerHTML = "0";
+    });
+};
+
 //add click event to the equal button and run the calculations
 function equalBtn() {
     equalButton.addEventListener("click", () => {
@@ -41,6 +62,7 @@ function equalBtn() {
         currentDisplay.innerHTML = result;
     });
 };
+
 //add click event to the clear button and clear all the variables and display
 function clearBtn() {
     clearButton.addEventListener("click", () => {
@@ -51,6 +73,7 @@ function clearBtn() {
         currentDisplay.innerHTML = 0;
     });
 };
+
 
 //basic calculator functions
 function add(a, b) {
@@ -107,6 +130,10 @@ function operate(op) {
 numBtns();
 
 operatorBtns();
+
+exponentBtn();
+
+factorialBtn();
 
 equalBtn();
 
