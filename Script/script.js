@@ -13,7 +13,7 @@ let firstNumber = "";
 let operator = "";
 let secondNumber = "";
 let oldValues = [];
-let result 
+let result = "";
 
 
 //add click event to the numbered buttons and update the display as necessary
@@ -32,10 +32,21 @@ function numBtns() {
 //add click event to the operator buttons and update the display as necessary
 function operatorBtns() {
     Array.from(allOperator_btn).map(btn => btn.addEventListener("click", e =>{
-        oldValues.push(firstNumber);
-        operator += e.target.innerText;
-        oldValues.push(operator);
-        pastDisplay.innerHTML = oldValues.join(" ");
+        if (operator.length === 0) {
+            oldValues.push(firstNumber);
+            operator = e.target.innerText;
+            oldValues.push(operator);
+            pastDisplay.innerHTML = oldValues.join(" ");
+        } else {
+            oldValues.push(secondNumber);
+            operate(operator);
+            firstNumber = result;
+            secondNumber = "";
+            currentDisplay.innerHTML = firstNumber;
+            pastDisplay.innerHTML = oldValues.join(" ");
+            operator = e.target.innerText;
+            oldValues.push(operator);
+        }
     }));
 };
 
@@ -131,7 +142,7 @@ function operate(op) {
         case "+":
             result = add(parseFloat(firstNumber), parseFloat(secondNumber));
             break;
-        case "—":
+        case "-":
             result = subtract(parseFloat(firstNumber), parseFloat(secondNumber));
             break;
         case "x":
@@ -165,5 +176,4 @@ equalBtn();
 clearBtn();
 
 
-//push the old values into an array to display them correctly
 //make sequence of calculations work
