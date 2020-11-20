@@ -9,9 +9,10 @@ const allOperator_btn = document.getElementsByClassName("operator");
 const allNum_btn = document.getElementsByClassName("btn-num");
 const currentDisplay = document.getElementById("current-display");
 const pastDisplay = document.getElementById("past-display");
-let firstNumber = [];
+let firstNumber = "";
 let operator = "";
-let secondNumber = [];
+let secondNumber = "";
+let oldValues = [];
 let result 
 
 
@@ -19,11 +20,11 @@ let result
 function numBtns() {
     Array.from(allNum_btn).map(btn => btn.addEventListener("click", e => {
         if (operator.length === 0) {
-            firstNumber.push(e.target.innerText);
-            currentDisplay.innerHTML = firstNumber.join("");
+            firstNumber += e.target.innerText;
+            currentDisplay.innerHTML = firstNumber;
         } else {
-            secondNumber.push(e.target.innerText);
-            currentDisplay.innerHTML = secondNumber.join("");
+            secondNumber += e.target.innerText;
+            currentDisplay.innerHTML = secondNumber;
         };
     }));
 };
@@ -31,18 +32,21 @@ function numBtns() {
 //add click event to the operator buttons and update the display as necessary
 function operatorBtns() {
     Array.from(allOperator_btn).map(btn => btn.addEventListener("click", e =>{
+        oldValues.push(firstNumber);
         operator += e.target.innerText;
-        pastDisplay.innerHTML = `${firstNumber.join("")} ${operator}`;
-        currentDisplay.innerHTML = "0";
+        oldValues.push(operator);
+        pastDisplay.innerHTML = oldValues.join(" ");
     }));
 };
 
 //add click event to the exponent button and update the display as necessary
 function exponentBtn() {
     exponentButton.addEventListener("click", () => {
+        oldValues.push(firstNumber);
         operator = "^";
-        pastDisplay.innerHTML = `${firstNumber.join("")} ${operator}`;
-        currentDisplay.innerHTML = "0";
+        oldValues.push(operator);
+        pastDisplay.innerHTML = oldValues.join(" ");
+        currentDisplay.innerHTML = firstNumber;
     });
 };
 
@@ -50,7 +54,6 @@ function exponentBtn() {
 function factorialBtn() {
     factorialButton.addEventListener("click", () => {
         operator = "!";
-        pastDisplay.innerHTML = `${firstNumber.join("")} ${operator}`;
         operate("!");
         currentDisplay.innerHTML = result;
     });
@@ -59,33 +62,38 @@ function factorialBtn() {
 function backspaceBtn() {
     backspaceButton.addEventListener("click", () => {
         if (operator.length === 0) {
-            firstNumber.splice(-1, 1);
-            currentDisplay.innerHTML = firstNumber.join("");
+            firstNumber = firstNumber.split("");
+            firstNumber.pop();
+            firstNumber = firstNumber.join("");
+            currentDisplay.innerHTML = firstNumber;
         } else {
-            secondNumber.splice(-1, 1);
-            pastDisplay.innerHTML = `${firstNumber.join("")} ${operator}`;
-            currentDisplay.innerHTML = secondNumber.join("");
-        }
+            secondNumber = secondNumber.split("");
+            secondNumber.pop();
+            secondNumber = secondNumber.join("");
+            currentDisplay.innerHTML = secondNumber;
+        };
     });
 };
 
 //add click event to the equal button and run the calculations
 function equalBtn() {
     equalButton.addEventListener("click", () => {
+        oldValues.push(secondNumber);
         operate(operator);
-        pastDisplay.innerHTML = `${firstNumber} ${operator} ${secondNumber}`;
         currentDisplay.innerHTML = result;
+        pastDisplay.innerHTML = oldValues.join(" ");
     });
 };
 
 //add click event to the clear button and clear all the variables and display
 function clearBtn() {
     clearButton.addEventListener("click", () => {
-        firstNumber = [];
+        firstNumber = "";
         operator = "";
-        secondNumber = [];
-        pastDisplay.innerHTML = "";
+        secondNumber = "";
+        oldValues = [];
         currentDisplay.innerHTML = 0;
+        pastDisplay.innerHTML = oldValues;
     });
 };
 
@@ -116,16 +124,9 @@ function factorial(n) {
 	return n *= factorial(n-1);
 };
 
-//convert the arrays back into strings to calculate
-function convertToString() {
-    firstNumber = firstNumber.join("");
-    secondNumber = secondNumber.join("");
-};
-
 
 //run the calculations depending on user input
 function operate(op) {
-    convertToString();
     switch (op) {
         case "+":
             result = add(parseFloat(firstNumber), parseFloat(secondNumber));
