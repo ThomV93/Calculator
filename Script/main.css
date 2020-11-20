@@ -180,4 +180,12 @@ button:focus {
 .operator, #equal, #backspace {
     background-color: #e06900;
 }
+
+#equal:hover {
+    background: #333;
+}
+
+#backspace:hover {
+    background: #333;
+}
 /* Button styles end */
