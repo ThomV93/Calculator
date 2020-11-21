@@ -8,11 +8,11 @@ const extraOperator_btn = document.getElementsByClassName("extra-operator");
 const allOperator_btn = document.getElementsByClassName("operator");
 const allNum_btn = document.getElementsByClassName("btn-num");
 const currentDisplay = document.getElementById("current-display");
-const pastDisplay = document.getElementById("past-display");
+const oldValuesDisplay = document.getElementById("past-display");
 let firstNumber = "";
 let operator = "";
 let secondNumber = "";
-let oldValues = [];
+let oldValuesRecord = [];
 let result = "";
 
 
@@ -33,19 +33,21 @@ function numBtns() {
 function operatorBtns() {
     Array.from(allOperator_btn).map(btn => btn.addEventListener("click", e =>{
         if (operator.length === 0) {
-            oldValues.push(firstNumber);
             operator = e.target.innerText;
-            oldValues.push(operator);
-            pastDisplay.innerHTML = oldValues.join(" ");
+            oldValuesRecord.push(firstNumber, operator);
+            oldValuesDisplay.innerHTML = oldValuesRecord.join(" ");
         } else {
-            oldValues.push(secondNumber);
+            oldValuesRecord.push(secondNumber);
+            //run the calculations and update the variables
             operate(operator);
             firstNumber = result;
             secondNumber = "";
+            //updates the display
             currentDisplay.innerHTML = firstNumber;
-            pastDisplay.innerHTML = oldValues.join(" ");
+            oldValuesDisplay.innerHTML = oldValuesRecord.join(" ");
+            //updates and record the new operator
             operator = e.target.innerText;
-            oldValues.push(operator);
+            oldValuesRecord.push(operator);
         }
     }));
 };
@@ -53,10 +55,10 @@ function operatorBtns() {
 //add click event to the exponent button and update the display as necessary
 function exponentBtn() {
     exponentButton.addEventListener("click", () => {
-        oldValues.push(firstNumber);
         operator = "^";
-        oldValues.push(operator);
-        pastDisplay.innerHTML = oldValues.join(" ");
+        oldValuesRecord.push(firstNumber);
+        oldValuesRecord.push(operator);
+        oldValuesDisplay.innerHTML = oldValuesRecord.join(" ");
         currentDisplay.innerHTML = firstNumber;
     });
 };
@@ -89,22 +91,26 @@ function backspaceBtn() {
 //add click event to the equal button and run the calculations
 function equalBtn() {
     equalButton.addEventListener("click", () => {
-        oldValues.push(secondNumber);
+        oldValuesRecord.push(secondNumber);
         operate(operator);
-        currentDisplay.innerHTML = result;
-        pastDisplay.innerHTML = oldValues.join(" ");
+        currentDisplay.innerHTML = (result === undefined) ? 0 : result;
+        oldValuesDisplay.innerHTML = oldValuesRecord.join(" ");
     });
+};
+
+function clearAll() {
+    firstNumber = "";
+    operator = "";
+    secondNumber = "";
+    oldValuesRecord = [];
+    currentDisplay.innerHTML = 0;
+    oldValuesDisplay.innerHTML = oldValuesRecord;
 };
 
 //add click event to the clear button and clear all the variables and display
 function clearBtn() {
     clearButton.addEventListener("click", () => {
-        firstNumber = "";
-        operator = "";
-        secondNumber = "";
-        oldValues = [];
-        currentDisplay.innerHTML = 0;
-        pastDisplay.innerHTML = oldValues;
+        clearAll();
     });
 };
 
@@ -123,7 +129,12 @@ function multiply(a, b) {
 };
 
 function divide(a, b) {
-    return a / b;
+    if ( a || b === 0) {
+        alert("Don't you try to crash me!");
+        clearAll();
+    } else {
+        return a / b;
+    };
 };
 
 function exponent(a, b) {
@@ -176,11 +187,11 @@ equalBtn();
 clearBtn();
 
 
-//fix factiorial function in sequence of calculations
-//add on click style changes
 //round long decimals
+//can switch operators after one is picked. Leave the operator "selected"
 //equal btn only works when all values are inputed
-//can't divide by 0
+//can calculate result after pressing = 
 //only possible to add one dot
 //add keyboard support
-//can calculate result after pressing = 
+//add on click style changes
+//fix factiorial function in sequence of calculations
