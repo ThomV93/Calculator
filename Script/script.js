@@ -1,4 +1,4 @@
-//create and cash all variables used
+//create and cash all constants and variables used
 const clearButton = document.getElementById("clear");
 const exponentButton = document.getElementById("exponent");
 const factorialButton = document.getElementById("factorial");
@@ -72,6 +72,7 @@ function factorialBtn() {
     });
 };
 
+//remove the last number when clicked
 function backspaceBtn() {
     backspaceButton.addEventListener("click", () => {
         if (operator.length === 0) {
@@ -98,6 +99,7 @@ function equalBtn() {
     });
 };
 
+//clear all the values stored
 function clearAll() {
     firstNumber = "";
     operator = "";
@@ -107,7 +109,7 @@ function clearAll() {
     oldValuesDisplay.innerHTML = oldValuesRecord;
 };
 
-//add click event to the clear button and clear all the variables and display
+//add click event to the clear button
 function clearBtn() {
     clearButton.addEventListener("click", () => {
         clearAll();
@@ -129,7 +131,7 @@ function multiply(a, b) {
 };
 
 function divide(a, b) {
-    if ( a || b === 0) {
+    if ( b === 0) {
         alert("Don't you try to crash me!");
         clearAll();
     } else {
@@ -190,8 +192,9 @@ clearBtn();
 //round long decimals
 //can switch operators after one is picked. Leave the operator "selected"
 //equal btn only works when all values are inputed
-//can calculate result after pressing = 
 //only possible to add one dot
 //add keyboard support
 //add on click style changes
+//switch factorial function for +/-
 //fix factiorial function in sequence of calculations
+//fix historic display when calculating after =
