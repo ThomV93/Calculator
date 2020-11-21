@@ -176,4 +176,11 @@ equalBtn();
 clearBtn();
 
 
-//make sequence of calculations work
+//fix factiorial function in sequence of calculations
+//add on click style changes
+//round long decimals
+//equal btn only works when all values are inputed
+//can't divide by 0
+//only possible to add one dot
+//add keyboard support
+//can calculate result after pressing = 
