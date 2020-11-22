@@ -10,8 +10,8 @@ const allNum_btn = document.getElementsByClassName("btn-num");
 const currentDisplay = document.getElementById("current-display");
 const oldValuesDisplay = document.getElementById("past-display");
 let firstNumber = "";
-let operator = "";
 let secondNumber = "";
+let operator = "";
 let oldValuesRecord = [];
 let result = "";
 
@@ -194,7 +194,5 @@ clearBtn();
 //equal btn only works when all values are inputed
 //only possible to add one dot
 //add keyboard support
-//add on click style changes
 //switch factorial function for +/-
-//fix factiorial function in sequence of calculations
 //fix historic display when calculating after =
