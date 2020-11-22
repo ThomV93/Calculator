@@ -8,11 +8,9 @@ const extraOperator_btn = document.getElementsByClassName("extra-operator");
 const allOperator_btn = document.getElementsByClassName("operator");
 const allNum_btn = document.getElementsByClassName("btn-num");
 const currentDisplay = document.getElementById("current-display");
-const oldValuesDisplay = document.getElementById("past-display");
 let firstNumber = "";
 let secondNumber = "";
 let operator = "";
-let oldValuesRecord = [];
 let result = "";
 
 
@@ -34,20 +32,12 @@ function operatorBtns() {
     Array.from(allOperator_btn).map(btn => btn.addEventListener("click", e =>{
         if (operator.length === 0) {
             operator = e.target.innerText;
-            oldValuesRecord.push(firstNumber, operator);
-            oldValuesDisplay.innerHTML = oldValuesRecord.join(" ");
         } else {
-            oldValuesRecord.push(secondNumber);
-            //run the calculations and update the variables
             operate(operator);
             firstNumber = result;
             secondNumber = "";
-            //updates the display
             currentDisplay.innerHTML = firstNumber;
-            oldValuesDisplay.innerHTML = oldValuesRecord.join(" ");
-            //updates and record the new operator
             operator = e.target.innerText;
-            oldValuesRecord.push(operator);
         }
     }));
 };
@@ -56,19 +46,7 @@ function operatorBtns() {
 function exponentBtn() {
     exponentButton.addEventListener("click", () => {
         operator = "^";
-        oldValuesRecord.push(firstNumber);
-        oldValuesRecord.push(operator);
-        oldValuesDisplay.innerHTML = oldValuesRecord.join(" ");
         currentDisplay.innerHTML = firstNumber;
-    });
-};
-
-//add click event to the factorial button and update the display as necessary
-function factorialBtn() {
-    factorialButton.addEventListener("click", () => {
-        operator = "!";
-        operate("!");
-        currentDisplay.innerHTML = result;
     });
 };
 
@@ -92,10 +70,8 @@ function backspaceBtn() {
 //add click event to the equal button and run the calculations
 function equalBtn() {
     equalButton.addEventListener("click", () => {
-        oldValuesRecord.push(secondNumber);
         operate(operator);
         currentDisplay.innerHTML = (result === undefined) ? 0 : result;
-        oldValuesDisplay.innerHTML = oldValuesRecord.join(" ");
     });
 };
 
@@ -104,9 +80,7 @@ function clearAll() {
     firstNumber = "";
     operator = "";
     secondNumber = "";
-    oldValuesRecord = [];
     currentDisplay.innerHTML = 0;
-    oldValuesDisplay.innerHTML = oldValuesRecord;
 };
 
 //add click event to the clear button
@@ -180,8 +154,6 @@ operatorBtns();
 
 exponentBtn();
 
-factorialBtn();
-
 backspaceBtn();
 
 equalBtn();
@@ -189,10 +161,9 @@ equalBtn();
 clearBtn();
 
 
+//switch factorial function for +/-
 //round long decimals
 //can switch operators after one is picked. Leave the operator "selected"
 //equal btn only works when all values are inputed
 //only possible to add one dot
 //add keyboard support
-//switch factorial function for +/-
-//fix historic display when calculating after =
