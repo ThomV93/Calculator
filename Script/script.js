@@ -28,13 +28,17 @@ function eraseChar(num) {
     return num.join("");
 }
 
-//clear all the values stored
 function clearAll() {
     firstNumber = "";
     operator = "";
     secondNumber = "";
     currentDisplay.innerHTML = 0;
 };
+
+function roundDecimals(num) {
+    num = Math.round((num + Number.EPSILON) * 100) / 100;
+    return num;
+}
 
 
 //add click event to the numbered buttons and update the display as necessary
@@ -57,6 +61,7 @@ function operatorBtns() {
             operator = e.target.innerText;
         } else {
             operate(operator);
+            result = roundDecimals(result);
             firstNumber = result;
             secondNumber = "";
             currentDisplay.innerHTML = firstNumber;
@@ -103,6 +108,7 @@ function backspaceBtn() {
 function equalBtn() {
     equalButton.addEventListener("click", () => {
         operate(operator);
+        result = roundDecimals(result);
         currentDisplay.innerHTML = (result === undefined) ? 0 : result;
     });
 };
@@ -178,7 +184,7 @@ equalBtn();
 clearBtn();
 
 
-//round long decimals
+
 //can switch operators after one is picked. Leave the operator "selected"
 //equal btn only works when all values are inputed
 //only possible to add one dot
