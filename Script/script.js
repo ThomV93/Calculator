@@ -1,7 +1,7 @@
 //create and cash all constants and variables used
 const clearButton = document.getElementById("clear");
 const exponentButton = document.getElementById("exponent");
-const factorialButton = document.getElementById("factorial");
+const posOrNegButton = document.getElementById("pos-or-neg");
 const backspaceButton = document.getElementById("backspace");
 const equalButton = document.getElementById("equal");
 const extraOperator_btn = document.getElementsByClassName("extra-operator");
@@ -12,6 +12,29 @@ let firstNumber = "";
 let secondNumber = "";
 let operator = "";
 let result = "";
+
+
+//turn the number into a negative and vice versa
+function reverseSign(num) {
+    parseFloat(num);
+    num *= -1;
+    return num.toString();
+};
+
+//erase last char
+function eraseChar(num) {
+    num = num.split("");
+    num.pop();
+    return num.join("");
+}
+
+//clear all the values stored
+function clearAll() {
+    firstNumber = "";
+    operator = "";
+    secondNumber = "";
+    currentDisplay.innerHTML = 0;
+};
 
 
 //add click event to the numbered buttons and update the display as necessary
@@ -50,18 +73,27 @@ function exponentBtn() {
     });
 };
 
+//add click event to the +/- button, run the function and update the display as necessary
+function posOrNegBtn() {
+    posOrNegButton.addEventListener("click", () => {
+        if (operator.length === 0) {
+            firstNumber = reverseSign(firstNumber);
+            currentDisplay.innerHTML = firstNumber;
+        } else {
+            secondNumber = reverseSign(secondNumber);
+            currentDisplay.innerHTML = secondNumber;
+        };
+    });
+};
+
 //remove the last number when clicked
 function backspaceBtn() {
     backspaceButton.addEventListener("click", () => {
         if (operator.length === 0) {
-            firstNumber = firstNumber.split("");
-            firstNumber.pop();
-            firstNumber = firstNumber.join("");
+            firstNumber = eraseChar(firstNumber);
             currentDisplay.innerHTML = firstNumber;
         } else {
-            secondNumber = secondNumber.split("");
-            secondNumber.pop();
-            secondNumber = secondNumber.join("");
+            secondNumber = eraseChar(secondNumber);
             currentDisplay.innerHTML = secondNumber;
         };
     });
@@ -73,14 +105,6 @@ function equalBtn() {
         operate(operator);
         currentDisplay.innerHTML = (result === undefined) ? 0 : result;
     });
-};
-
-//clear all the values stored
-function clearAll() {
-    firstNumber = "";
-    operator = "";
-    secondNumber = "";
-    currentDisplay.innerHTML = 0;
 };
 
 //add click event to the clear button
@@ -117,12 +141,6 @@ function exponent(a, b) {
 	return Math.pow(a, b);
 };
 
-function factorial(n) {
-	if(n < 2) return 1;
-	return n *= factorial(n-1);
-};
-
-
 //run the calculations depending on user input
 function operate(op) {
     switch (op) {
@@ -141,9 +159,6 @@ function operate(op) {
         case "^":
             result = exponent(parseFloat(firstNumber), parseFloat(secondNumber));
             break;
-        case "!":
-            result = factorial(parseFloat(firstNumber), parseFloat(secondNumber));
-            break;
     };
     return result;
 };
@@ -154,6 +169,8 @@ operatorBtns();
 
 exponentBtn();
 
+posOrNegBtn();
+
 backspaceBtn();
 
 equalBtn();
@@ -161,7 +178,6 @@ equalBtn();
 clearBtn();
 
 
-//switch factorial function for +/-
 //round long decimals
 //can switch operators after one is picked. Leave the operator "selected"
 //equal btn only works when all values are inputed
