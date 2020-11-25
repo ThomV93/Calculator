@@ -2,6 +2,7 @@
 const clearButton = document.getElementById("clear");
 const exponentButton = document.getElementById("exponent");
 const posOrNegButton = document.getElementById("pos-or-neg");
+const dotButton = document.getElementById("dot");
 const backspaceButton = document.getElementById("backspace");
 const equalButton = document.getElementById("equal");
 const extraOperator_btn = document.getElementsByClassName("extra-operator");
@@ -38,7 +39,7 @@ function clearAll() {
 function roundDecimals(num) {
     num = Math.round((num + Number.EPSILON) * 100) / 100;
     return num;
-}
+};
 
 
 //add click event to the numbered buttons and update the display as necessary
@@ -107,9 +108,13 @@ function backspaceBtn() {
 //add click event to the equal button and run the calculations
 function equalBtn() {
     equalButton.addEventListener("click", () => {
-        operate(operator);
-        result = roundDecimals(result);
-        currentDisplay.innerHTML = (result === undefined) ? 0 : result;
+        if (firstNumber.length === 0 || secondNumber.length === 0 || operator.length === 0) {
+            return false;
+        } else {
+            operate(operator);
+            result = roundDecimals(result);
+            currentDisplay.innerHTML = result;
+        };
     });
 };
 
@@ -146,6 +151,7 @@ function divide(a, b) {
 function exponent(a, b) {
 	return Math.pow(a, b);
 };
+
 
 //run the calculations depending on user input
 function operate(op) {
@@ -186,6 +192,5 @@ clearBtn();
 
 
 //can switch operators after one is picked. Leave the operator "selected"
-//equal btn only works when all values are inputed
 //only possible to add one dot
 //add keyboard support
