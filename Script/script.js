@@ -1,4 +1,4 @@
-//create and cash all constants and variables used
+//create and cash all constants and global variables used
 const clearButton = document.getElementById("clear");
 const exponentButton = document.getElementById("exponent");
 const posOrNegButton = document.getElementById("pos-or-neg");
@@ -29,6 +29,7 @@ function eraseChar(num) {
     return num.join("");
 }
 
+//Reset the calculator
 function clearAll() {
     firstNumber = "";
     operator = "";
@@ -36,9 +37,19 @@ function clearAll() {
     currentDisplay.innerHTML = 0;
 };
 
+//Round long decimals to 2 when needed
 function roundDecimals(num) {
     num = Math.round((num + Number.EPSILON) * 100) / 100;
     return num;
+};
+
+//Calculate the values when a string of calculations is needed without the equal button
+function calcSequence() {
+    operate(operator);
+    result = roundDecimals(result);
+    firstNumber = result;
+    secondNumber = "";
+    currentDisplay.innerHTML = firstNumber;
 };
 
 
@@ -58,16 +69,15 @@ function numBtns() {
 //add click event to the operator buttons and update the display as necessary
 function operatorBtns() {
     Array.from(allOperator_btn).map(btn => btn.addEventListener("click", e =>{
-        if (operator.length === 0) {
+        if (operator.length === 0) { //first operator chosen
             operator = e.target.innerText;
-        } else {
-            operate(operator);
-            result = roundDecimals(result);
-            firstNumber = result;
-            secondNumber = "";
-            currentDisplay.innerHTML = firstNumber;
+        } else if (secondNumber.length > 0){ //in case of a string of calculations
+            calcSequence();
             operator = e.target.innerText;
-        }
+        } else { //swich between operators
+            operator = "";
+            operator = e.target.innerText;
+        };
     }));
 };
 
@@ -108,8 +118,8 @@ function backspaceBtn() {
 //add click event to the equal button and run the calculations
 function equalBtn() {
     equalButton.addEventListener("click", () => {
-        if (firstNumber.length === 0 || secondNumber.length === 0 || operator.length === 0) {
-            return false;
+        if (secondNumber.length === 0) {
+            return;
         } else {
             operate(operator);
             result = roundDecimals(result);
@@ -140,7 +150,7 @@ function multiply(a, b) {
 };
 
 function divide(a, b) {
-    if ( b === 0) {
+    if ( b === 0) {//can't divide by 0
         alert("Don't you try to crash me!");
         clearAll();
     } else {
@@ -191,6 +201,5 @@ clearBtn();
 
 
 
-//can switch operators after one is picked. Leave the operator "selected"
 //only possible to add one dot
 //add keyboard support

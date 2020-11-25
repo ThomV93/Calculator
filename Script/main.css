@@ -179,6 +179,13 @@ button:focus {
     outline-offset: -1px;
 }
 
+.operator:focus {
+    outline: 1px solid #f0f0f0;
+    outline-offset: -1px;
+    transform: scale(0.98); 
+    box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24); 
+}
+
 .operator, #equal, #backspace {
     background-color: #e06900;
 }
