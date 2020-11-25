@@ -2,7 +2,7 @@
 const clearButton = document.getElementById("clear");
 const exponentButton = document.getElementById("exponent");
 const posOrNegButton = document.getElementById("pos-or-neg");
-const dotButton = document.getElementById("dot");
+const dotButton = document.querySelector(".btn-dot");
 const backspaceButton = document.getElementById("backspace");
 const equalButton = document.getElementById("equal");
 const extraOperator_btn = document.getElementsByClassName("extra-operator");
@@ -74,11 +74,26 @@ function operatorBtns() {
         } else if (secondNumber.length > 0){ //in case of a string of calculations
             calcSequence();
             operator = e.target.innerText;
-        } else { //swich between operators
+        } else { //swich between operators after selected
             operator = "";
             operator = e.target.innerText;
         };
     }));
+};
+
+//add click event to the dot button and update de display as necessary
+function dotBtn() {
+    dotButton.addEventListener("click", () => {
+        if (operator.length === 0) {
+            //if there is already a dot, disable class
+            (firstNumber.indexOf(".") !== -1) ? dotButton.classList.remove("btn-num") : firstNumber += ".";
+            currentDisplay.innerHTML = firstNumber;
+        } else {
+            dotButton.classList.add("btn-num");
+            (secondNumber.indexOf(".") !== -1) ? dotButton.classList.remove("btn-num") : secondNumber += ".";
+            currentDisplay.innerHTML = secondNumber;
+        };
+    });
 };
 
 //add click event to the exponent button and update the display as necessary
@@ -185,9 +200,12 @@ function operate(op) {
     return result;
 };
 
+
 numBtns();
 
 operatorBtns();
+
+dotBtn();
 
 exponentBtn();
 
@@ -201,5 +219,5 @@ clearBtn();
 
 
 
-//only possible to add one dot
 //add keyboard support
+//add past display back ?
