@@ -151,6 +151,14 @@ function clearBtn() {
 };
 
 
+//keyboard support for numbers
+function keyboardNums() {
+    window.addEventListener("keydown", e => {
+        console.log(e.key);
+    });
+};
+
+
 //basic calculator functions
 function add(a, b) {
     return a + b;
@@ -216,6 +224,8 @@ backspaceBtn();
 equalBtn();
 
 clearBtn();
+
+keyboardNums();
 
 
 
