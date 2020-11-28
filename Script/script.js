@@ -154,7 +154,18 @@ function clearBtn() {
 //keyboard support for numbers
 function keyboardNums() {
     window.addEventListener("keydown", e => {
-        console.log(e.key);
+        let rawInput = parseInt(e.key);
+        let treatedInput = /[^0-9]/.test(rawInput);
+        
+        if (treatedInput === false) {
+            if (operator.length === 0) {
+                firstNumber += e.key;
+                currentDisplay.innerHTML = firstNumber;
+            } else {
+                secondNumber += e.key;
+                currentDisplay.innerHTML = secondNumber;
+            };
+        }
     });
 };
 
@@ -229,5 +240,6 @@ keyboardNums();
 
 
 
-//add keyboard support
+//add keyboard support for operators/ equal sign
+//numbers without operator presse after equal sign pressed
 //add past display back ?
