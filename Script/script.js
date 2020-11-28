@@ -9,10 +9,12 @@ const extraOperator_btn = document.getElementsByClassName("extra-operator");
 const allOperator_btn = document.getElementsByClassName("operator");
 const allNum_btn = document.getElementsByClassName("btn-num");
 const currentDisplay = document.getElementById("current-display");
+const pastDisplay = document.getElementById("past-display");
 let firstNumber = "";
 let secondNumber = "";
 let operator = "";
 let result = "";
+let historicValues = [];
 
 
 //turn the number into a negative and vice versa
@@ -159,7 +161,7 @@ function clearBtn() {
 
 
 //------Keyboard section------
-//keyboard support for numbers
+//keyboard support for numbers and dot
 function keyboardNums() {
     window.addEventListener("keydown", e => {
         let rawInput = parseInt(e.key);

@@ -223,7 +223,7 @@ button:focus {
 #footer-img-container:hover {
     height: 32px;
     width: 32px;
-    background-image: url("../images/GitHub-Mark-Light-32px");
+    background-image: url("../images/GitHub-Mark-Light-32px.png");
     background-repeat: no-repeat;
     background-position: center left;
     background-origin: content-box;
