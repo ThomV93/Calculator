@@ -1,10 +1,8 @@
 //create and cash all constants and global variables used
 const clearButton = document.getElementById("clear");
-const exponentButton = document.getElementById("exponent");
+const percentageButton = document.getElementById("percentage");
 const posOrNegButton = document.getElementById("pos-or-neg");
 const dotButton = document.getElementById("dot");
-const backspaceButton = document.getElementById("backspace");
-const equalButton = document.getElementById("equal");
 const extraOperator_btn = document.getElementsByClassName("extra-operator");
 const allOperator_btn = document.getElementsByClassName("operator");
 const allNum_btn = document.getElementsByClassName("btn-num");
@@ -89,31 +87,42 @@ function numBtns() {
 //add click event to the operator buttons and update the display as necessary
 function operatorBtns() {
     Array.from(allOperator_btn).map(btn => btn.addEventListener("click", e =>{
-        if (operator.length === 0) { //first operator chosen
-            operator = e.target.innerText;
-        } else if (secondNumber.length > 0){ //in case of a string of calculations
-            calcSequence();
-            operator = e.target.innerText;
-        } else { //swich between operators after selected
-            operator = "";
-            operator = e.target.innerText;
+        switch (e.target.innerText) {
+            case "+":
+            case "-":
+            case "x":
+            case "÷":
+            case "%":
+                if (operator.length === 0) { //first operator chosen
+                    operator = e.target.innerText;
+                } else if (secondNumber.length > 0){ //in case of a string of calculations
+                    calcSequence();
+                    operator = e.target.innerText;
+                } else { //swich between operators after selected
+                    operator = "";
+                    operator = e.target.innerText;
+                };
+                break;
+            case "": //for the backspace, since it is only an image
+                if (operator.length === 0) {
+                    firstNumber = eraseChar(firstNumber);
+                    currentDisplay.innerText = firstNumber;
+                } else {
+                    secondNumber = eraseChar(secondNumber);
+                    currentDisplay.innerText = secondNumber;
+                };
+                break;
+            case "=":
+                if (secondNumber.length === 0) { //run only if all values are present
+                    return;
+                } else {
+                    operate(operator);
+                    result = roundDecimals(result);
+                    currentDisplay.innerText = result;
+                };
+                break;
         };
     }));
-};
-
-//add click event to the exponent button and update the display as necessary
-function exponentBtn() {
-    exponentButton.addEventListener("click", () => {
-        if (operator.length === 0) { //first operator chosen
-            operator = "^";
-        } else if (secondNumber.length > 0){ //in case of a string of calculations
-            calcSequence();
-            operator = "^";
-        } else { //swich between operators after selected
-            operator = "";
-            operator = "^";
-        };
-    });
 };
 
 //add click event to the +/- button, run the function and update the display as necessary
@@ -125,32 +134,6 @@ function posOrNegBtn() {
         } else {
             secondNumber = reverseSign(secondNumber);
             currentDisplay.innerText = secondNumber;
-        };
-    });
-};
-
-//remove the last number when clicked
-function backspaceBtn() {
-    backspaceButton.addEventListener("click", () => {
-        if (operator.length === 0) {
-            firstNumber = eraseChar(firstNumber);
-            currentDisplay.innerText = firstNumber;
-        } else {
-            secondNumber = eraseChar(secondNumber);
-            currentDisplay.innerText = secondNumber;
-        };
-    });
-};
-
-//add click event to the equal button and run the calculations
-function equalBtn() {
-    equalButton.addEventListener("click", () => {
-        if (secondNumber.length === 0) { //run only if all values are present
-            return;
-        } else {
-            operate(operator);
-            result = roundDecimals(result);
-            currentDisplay.innerText = result;
         };
     });
 };
@@ -203,7 +186,7 @@ function keyboardOperators() {
             case "-":
             case "x":
             case "/":
-            case "^":
+            case "%":
                 if (operator.length === 0) { //first operator chosen
                     operator = e.key;
                 } else if (secondNumber.length > 0){ //in case of a string of calculations
@@ -231,6 +214,7 @@ function keyboardOperators() {
                     result = roundDecimals(result);
                     currentDisplay.innerText = result;
                 };
+                break;
         };
     });
 };
@@ -259,8 +243,8 @@ function divide(a, b) {
     };
 };
 
-function exponent(a, b) {
-	return Math.pow(a, b);
+function percentage(a, b) {
+	return (a / 100) * b;
 };
 
 
@@ -283,8 +267,8 @@ function operate(op) {
         case "/":
             result = divide(parseFloat(firstNumber), parseFloat(secondNumber));
             break;
-        case "^":
-            result = exponent(parseFloat(firstNumber), parseFloat(secondNumber));
+        case "%":
+            result = percentage(parseFloat(firstNumber), parseFloat(secondNumber));
             break;
     };
     return result;
@@ -295,13 +279,7 @@ numBtns();
 
 operatorBtns();
 
-exponentBtn();
-
 posOrNegBtn();
-
-backspaceBtn();
-
-equalBtn();
 
 clearBtn();
 
