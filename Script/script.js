@@ -99,8 +99,15 @@ function dotBtn() {
 //add click event to the exponent button and update the display as necessary
 function exponentBtn() {
     exponentButton.addEventListener("click", () => {
-        operator = "^";
-        currentDisplay.innerHTML = firstNumber;
+        if (operator.length === 0) { //first operator chosen
+            operator = "^";
+        } else if (secondNumber.length > 0){ //in case of a string of calculations
+            calcSequence();
+            operator = "^";
+        } else { //swich between operators after selected
+            operator = "";
+            operator = "^";
+        };
     });
 };
 
@@ -133,7 +140,7 @@ function backspaceBtn() {
 //add click event to the equal button and run the calculations
 function equalBtn() {
     equalButton.addEventListener("click", () => {
-        if (secondNumber.length === 0) {
+        if (secondNumber.length === 0) { //run only if all values are present
             return;
         } else {
             operate(operator);
@@ -151,12 +158,13 @@ function clearBtn() {
 };
 
 
+//------Keyboard section------
 //keyboard support for numbers
 function keyboardNums() {
     window.addEventListener("keydown", e => {
         let rawInput = parseInt(e.key);
         let treatedInput = /[^0-9]/.test(rawInput);
-        
+        //if it is a number, do the following
         if (treatedInput === false) {
             if (operator.length === 0) {
                 firstNumber += e.key;
@@ -165,9 +173,86 @@ function keyboardNums() {
                 secondNumber += e.key;
                 currentDisplay.innerHTML = secondNumber;
             };
-        }
+        //if it is a dot
+        } else if (e.key === ".") {
+            if (operator.length === 0) {
+                //if there is already a dot, disable class
+                (firstNumber.indexOf(".") !== -1) ? dotButton.classList.remove("btn-num") : firstNumber += ".";
+                currentDisplay.innerHTML = firstNumber;
+            } else {
+                dotButton.classList.add("btn-num");
+                (secondNumber.indexOf(".") !== -1) ? dotButton.classList.remove("btn-num") : secondNumber += ".";
+                currentDisplay.innerHTML = secondNumber;
+            };
+        } else {
+            return;
+        };
     });
 };
+
+//keyboard support for operators and equal sign
+function keyboardOperators() {
+    window.addEventListener("keydown", e => {
+        switch (e.key) {
+            case "+":
+                if (operator.length === 0) { //first operator chosen
+                    operator = e.key;
+                } else if (secondNumber.length > 0){ //in case of a string of calculations
+                    calcSequence();
+                    operator = e.key;
+                } else { //swich between operators after selected
+                    operator = "";
+                    operator = e.key;
+                };
+                break;
+            case "-":
+                if (operator.length === 0) { //first operator chosen
+                    operator = e.key;
+                } else if (secondNumber.length > 0){ //in case of a string of calculations
+                    calcSequence();
+                    operator = e.key;
+                } else { //swich between operators after selected
+                    operator = "";
+                    operator = e.key;
+                };
+                break;
+            case "x":
+                if (operator.length === 0) { //first operator chosen
+                    operator = e.key;
+                } else if (secondNumber.length > 0){ //in case of a string of calculations
+                    calcSequence();
+                    operator = e.key;
+                } else { //swich between operators after selected
+                    operator = "";
+                    operator = e.key;
+                };
+                break;
+            case "/":
+                if (operator.length === 0) { //first operator chosen
+                    operator = e.key;
+                } else if (secondNumber.length > 0){ //in case of a string of calculations
+                    calcSequence();
+                    operator = e.key;
+                } else { //swich between operators after selected
+                    operator = "";
+                    operator = e.key;
+                };
+                break;
+            case "^":
+                operator = "^";
+                currentDisplay.innerHTML = firstNumber;
+            case "=":
+                if (secondNumber.length === 0) { //run only if all values are present
+                    return;
+                } else {
+                    operate(operator);
+                    result = roundDecimals(result);
+                    currentDisplay.innerHTML = result;
+                };
+        };
+    });
+};
+//------Keyboard section------
 
 
 //basic calculator functions
@@ -238,8 +323,9 @@ clearBtn();
 
 keyboardNums();
 
+keyboardOperators();
 
 
-//add keyboard support for operators/ equal sign
-//numbers without operator presse after equal sign pressed
+
+//numbers without operator pressed after equal sign pressed
 //add past display back ?
