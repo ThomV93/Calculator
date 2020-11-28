@@ -7,12 +7,10 @@ const extraOperator_btn = document.getElementsByClassName("extra-operator");
 const allOperator_btn = document.getElementsByClassName("operator");
 const allNum_btn = document.getElementsByClassName("btn-num");
 const currentDisplay = document.getElementById("current-display");
-const pastDisplay = document.getElementById("past-display");
 let firstNumber = "";
 let secondNumber = "";
 let operator = "";
 let result = "";
-let historicValues = [];
 
 
 //turn the number into a negative and vice versa
@@ -290,4 +288,3 @@ keyboardOperators();
 
 
 //numbers without operator pressed after equal sign pressed
-//add past display back ?
