@@ -2,7 +2,7 @@
 const clearButton = document.getElementById("clear");
 const exponentButton = document.getElementById("exponent");
 const posOrNegButton = document.getElementById("pos-or-neg");
-const dotButton = document.querySelector(".btn-dot");
+const dotButton = document.getElementById("dot");
 const backspaceButton = document.getElementById("backspace");
 const equalButton = document.getElementById("equal");
 const extraOperator_btn = document.getElementsByClassName("extra-operator");
@@ -36,7 +36,7 @@ function clearAll() {
     firstNumber = "";
     operator = "";
     secondNumber = "";
-    currentDisplay.innerHTML = 0;
+    currentDisplay.innerText = 0;
 };
 
 //Round long decimals to 2 when needed
@@ -51,19 +51,37 @@ function calcSequence() {
     result = roundDecimals(result);
     firstNumber = result;
     secondNumber = "";
-    currentDisplay.innerHTML = firstNumber;
+    currentDisplay.innerText = firstNumber;
 };
 
 
 //add click event to the numbered buttons and update the display as necessary
 function numBtns() {
     Array.from(allNum_btn).map(btn => btn.addEventListener("click", e => {
-        if (operator.length === 0) {
-            firstNumber += e.target.innerText;
-            currentDisplay.innerHTML = firstNumber;
+        let rawInput = parseInt(e.target.innerText);
+        let treatedInput = /[^0-9]/.test(rawInput);
+        //if it is a number, do the following
+        if (treatedInput === false) {
+            if (operator.length === 0) {
+                firstNumber += e.target.innerText;
+                currentDisplay.innerText = firstNumber;
+            } else {
+                secondNumber += e.target.innerText;
+                currentDisplay.innerText = secondNumber;
+            };
+        //if it is a dot
+        } else if (e.target.innerText === ".") {
+            if (operator.length === 0) {
+                //if there is already a dot, disable class
+                (firstNumber.indexOf(".") !== -1) ? dotButton.classList.remove("btn-num") : firstNumber += ".";
+                currentDisplay.innerText = firstNumber;
+            } else {
+                dotButton.classList.add("btn-num"); //add the class again do the second number can have a dot as well
+                (secondNumber.indexOf(".") !== -1) ? dotButton.classList.remove("btn-num") : secondNumber += ".";
+                currentDisplay.innerText = secondNumber;
+            };
         } else {
-            secondNumber += e.target.innerText;
-            currentDisplay.innerHTML = secondNumber;
+            return;
         };
     }));
 };
@@ -81,21 +99,6 @@ function operatorBtns() {
             operator = e.target.innerText;
         };
     }));
-};
-
-//add click event to the dot button and update de display as necessary
-function dotBtn() {
-    dotButton.addEventListener("click", () => {
-        if (operator.length === 0) {
-            //if there is already a dot, disable class
-            (firstNumber.indexOf(".") !== -1) ? dotButton.classList.remove("btn-num") : firstNumber += ".";
-            currentDisplay.innerHTML = firstNumber;
-        } else {
-            dotButton.classList.add("btn-num");
-            (secondNumber.indexOf(".") !== -1) ? dotButton.classList.remove("btn-num") : secondNumber += ".";
-            currentDisplay.innerHTML = secondNumber;
-        };
-    });
 };
 
 //add click event to the exponent button and update the display as necessary
@@ -118,10 +121,10 @@ function posOrNegBtn() {
     posOrNegButton.addEventListener("click", () => {
         if (operator.length === 0) {
             firstNumber = reverseSign(firstNumber);
-            currentDisplay.innerHTML = firstNumber;
+            currentDisplay.innerText = firstNumber;
         } else {
             secondNumber = reverseSign(secondNumber);
-            currentDisplay.innerHTML = secondNumber;
+            currentDisplay.innerText = secondNumber;
         };
     });
 };
@@ -131,10 +134,10 @@ function backspaceBtn() {
     backspaceButton.addEventListener("click", () => {
         if (operator.length === 0) {
             firstNumber = eraseChar(firstNumber);
-            currentDisplay.innerHTML = firstNumber;
+            currentDisplay.innerText = firstNumber;
         } else {
             secondNumber = eraseChar(secondNumber);
-            currentDisplay.innerHTML = secondNumber;
+            currentDisplay.innerText = secondNumber;
         };
     });
 };
@@ -147,7 +150,7 @@ function equalBtn() {
         } else {
             operate(operator);
             result = roundDecimals(result);
-            currentDisplay.innerHTML = result;
+            currentDisplay.innerText = result;
         };
     });
 };
@@ -170,21 +173,21 @@ function keyboardNums() {
         if (treatedInput === false) {
             if (operator.length === 0) {
                 firstNumber += e.key;
-                currentDisplay.innerHTML = firstNumber;
+                currentDisplay.innerText = firstNumber;
             } else {
                 secondNumber += e.key;
-                currentDisplay.innerHTML = secondNumber;
+                currentDisplay.innerText = secondNumber;
             };
         //if it is a dot
         } else if (e.key === ".") {
             if (operator.length === 0) {
                 //if there is already a dot, disable class
                 (firstNumber.indexOf(".") !== -1) ? dotButton.classList.remove("btn-num") : firstNumber += ".";
-                currentDisplay.innerHTML = firstNumber;
+                currentDisplay.innerText = firstNumber;
             } else {
                 dotButton.classList.add("btn-num");
                 (secondNumber.indexOf(".") !== -1) ? dotButton.classList.remove("btn-num") : secondNumber += ".";
-                currentDisplay.innerHTML = secondNumber;
+                currentDisplay.innerText = secondNumber;
             };
         } else {
             return;
@@ -214,10 +217,10 @@ function keyboardOperators() {
             case "Backspace":
                 if (operator.length === 0) {
                     firstNumber = eraseChar(firstNumber);
-                    currentDisplay.innerHTML = firstNumber;
+                    currentDisplay.innerText = firstNumber;
                 } else {
                     secondNumber = eraseChar(secondNumber);
-                    currentDisplay.innerHTML = secondNumber;
+                    currentDisplay.innerText = secondNumber;
                 };
                 break;
             case "=":
@@ -226,7 +229,7 @@ function keyboardOperators() {
                 } else {
                     operate(operator);
                     result = roundDecimals(result);
-                    currentDisplay.innerHTML = result;
+                    currentDisplay.innerText = result;
                 };
         };
     });
@@ -291,8 +294,6 @@ function operate(op) {
 numBtns();
 
 operatorBtns();
-
-dotBtn();
 
 exponentBtn();
 
