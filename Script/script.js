@@ -197,39 +197,10 @@ function keyboardOperators() {
     window.addEventListener("keydown", e => {
         switch (e.key) {
             case "+":
-                if (operator.length === 0) { //first operator chosen
-                    operator = e.key;
-                } else if (secondNumber.length > 0){ //in case of a string of calculations
-                    calcSequence();
-                    operator = e.key;
-                } else { //swich between operators after selected
-                    operator = "";
-                    operator = e.key;
-                };
-                break;
             case "-":
-                if (operator.length === 0) { //first operator chosen
-                    operator = e.key;
-                } else if (secondNumber.length > 0){ //in case of a string of calculations
-                    calcSequence();
-                    operator = e.key;
-                } else { //swich between operators after selected
-                    operator = "";
-                    operator = e.key;
-                };
-                break;
             case "x":
-                if (operator.length === 0) { //first operator chosen
-                    operator = e.key;
-                } else if (secondNumber.length > 0){ //in case of a string of calculations
-                    calcSequence();
-                    operator = e.key;
-                } else { //swich between operators after selected
-                    operator = "";
-                    operator = e.key;
-                };
-                break;
             case "/":
+            case "^":
                 if (operator.length === 0) { //first operator chosen
                     operator = e.key;
                 } else if (secondNumber.length > 0){ //in case of a string of calculations
@@ -240,9 +211,15 @@ function keyboardOperators() {
                     operator = e.key;
                 };
                 break;
-            case "^":
-                operator = "^";
-                currentDisplay.innerHTML = firstNumber;
+            case "Backspace":
+                if (operator.length === 0) {
+                    firstNumber = eraseChar(firstNumber);
+                    currentDisplay.innerHTML = firstNumber;
+                } else {
+                    secondNumber = eraseChar(secondNumber);
+                    currentDisplay.innerHTML = secondNumber;
+                };
+                break;
             case "=":
                 if (secondNumber.length === 0) { //run only if all values are present
                     return;
@@ -297,6 +274,10 @@ function operate(op) {
             result = multiply(parseFloat(firstNumber), parseFloat(secondNumber));
             break;
         case "÷":
+            result = divide(parseFloat(firstNumber), parseFloat(secondNumber));
+            break;
+        //the second option for the division is needed for the keyboard support
+        case "/":
             result = divide(parseFloat(firstNumber), parseFloat(secondNumber));
             break;
         case "^":
