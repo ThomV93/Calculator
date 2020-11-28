@@ -54,8 +54,10 @@ function calcSequence() {
 //add click event to the numbered buttons and update the display as necessary
 function numBtns() {
     Array.from(allNum_btn).map(btn => btn.addEventListener("click", e => {
+        //regEx to check if the input is a number
         let rawInput = parseInt(e.target.innerText);
         let treatedInput = /[^0-9]/.test(rawInput);
+
         //if it is a number, do the following
         if (treatedInput === false) {
             if (operator.length === 0) {
@@ -82,10 +84,11 @@ function numBtns() {
     }));
 };
 
-//add click event to the operator buttons and update the display as necessary
+//add click event to the operator buttons
 function operatorBtns() {
     Array.from(allOperator_btn).map(btn => btn.addEventListener("click", e =>{
         switch (e.target.innerText) {
+            //in case of the "calculators"
             case "+":
             case "-":
             case "x":
@@ -96,7 +99,7 @@ function operatorBtns() {
                 } else if (secondNumber.length > 0){ //in case of a string of calculations
                     calcSequence();
                     operator = e.target.innerText;
-                } else { //swich between operators after selected
+                } else { //can swich between operators after selected
                     operator = "";
                     operator = e.target.innerText;
                 };
@@ -148,8 +151,10 @@ function clearBtn() {
 //keyboard support for numbers and dot
 function keyboardNums() {
     window.addEventListener("keydown", e => {
+        //regEx to check if the input is a number
         let rawInput = parseInt(e.key);
         let treatedInput = /[^0-9]/.test(rawInput);
+
         //if it is a number, do the following
         if (treatedInput === false) {
             if (operator.length === 0) {
@@ -166,7 +171,7 @@ function keyboardNums() {
                 (firstNumber.indexOf(".") !== -1) ? dotButton.classList.remove("btn-num") : firstNumber += ".";
                 currentDisplay.innerText = firstNumber;
             } else {
-                dotButton.classList.add("btn-num");
+                dotButton.classList.add("btn-num"); //add the class again do the second number can have a dot as well
                 (secondNumber.indexOf(".") !== -1) ? dotButton.classList.remove("btn-num") : secondNumber += ".";
                 currentDisplay.innerText = secondNumber;
             };
