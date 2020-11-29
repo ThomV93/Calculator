@@ -289,7 +289,3 @@ clearBtn();
 keyboardNums();
 
 keyboardOperators();
-
-
-
-//numbers without operator pressed after equal sign pressed
